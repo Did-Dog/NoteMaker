@@ -1,14 +1,15 @@
 define(["jquery",
     "underscore",
     "backbone",
-    "scripts/models/Note",
-    "scripts/views/NoteView"
+    "scripts/models/note",
+    "scripts/models/mainModel",
+    "scripts/views/mainView"
 ],
-    function (jQuery, _, Backbone, Note, NoteView) {
+    function (jQuery, _, Backbone, Note, MainModel, MainView) {
         var startView;
         var $ = jQuery;
         var initialize = function(){
-            startView = new NoteView({model:new Note(), el:$("body")});
+            startView = new MainView({model:new MainModel(), el:$("body")});
         }
         return {initialize:initialize};
 

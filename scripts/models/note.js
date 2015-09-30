@@ -1,9 +1,9 @@
-define(["backbone"
-], function(Backbone){
+define(["backbone",
+    "underscore"
+], function(Backbone, _){
 
     var Note = Backbone.Model.extend({
         defaults:{
-            id:-1,
             author:"J.R.R. Tolkien",
             note:"Note to Self!"
         }
