@@ -1,0 +1,31 @@
+.note-container {
+    width: 10em;
+    height: auto;
+    background-color: #FBFB69;
+    border: 2px solid yellow;
+    border-radius: 2px;
+    margin: .5em;
+    box-shadow: 6px 5px 13px grey;
+}
+
+.note-container hr{
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgb(220, 220, 96), rgba(0, 0, 0, 0));
+}
+.author-label {
+    font-weight: 600;
+}
+.delete-note img {
+    width:1em;
+    float:right;
+    opacity: .2;
+}
+.delete-note img:hover {
+    opacity: .6;
+}
+
+.author-label, .note-text {
+    word-wrap: break-word;
+    padding: 0.1em .6em;
+}

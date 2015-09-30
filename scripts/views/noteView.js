@@ -7,7 +7,7 @@ define(["backbone",
             this.render();
         },
         render:function(){
-            var html = _.template(noteTemplate)(this.model.attributes)
+            var html = _.template(noteTemplate)(_.extend(this.model.attributes,{cid:this.model.cid}));
 
             this.$el.append($(html));
         },

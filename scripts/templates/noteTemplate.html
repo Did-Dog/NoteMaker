@@ -1,6 +1,10 @@
-<div class="note-container">
-    <div class="author-label"><%= author%></div>
+<div class="note-container" data-id="<%= cid%>" >
     <div>
+        <div class="delete-note"><img src="resources/delete.png"/></div>
+        <div class="author-label"><%= author%></div>
+    </div>
+    <hr>
+    <div class="note-text">
         <%= note%>
     </div>
 </div>
