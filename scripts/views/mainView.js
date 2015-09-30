@@ -9,9 +9,15 @@ define(["backbone",
                 this.render();
                 this.model.set("store", window.localStorage);
                 this.model.set("notesView", new NotesView({el:this.$el.find(".notes-container")}));
+                this.listenTo(this.model.get("notesView").collection, 'remove', this.removeNoteFromStore);
+
+
                 if(this.model.get("store").length>0){
                     this.loadNotes();
                 }
+            },
+            removeNoteFromStore: function(note){
+                this.model.get("store").removeItem(note.cid);
             },
             render:function(){
                 var html = _.template(mainTemplate)({})
