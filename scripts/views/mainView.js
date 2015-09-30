@@ -8,7 +8,10 @@ define(["backbone",
             initialize:function(){
                 this.render();
                 this.model.set("store", window.localStorage);
-                this.model.set("notes", new NotesView({el:this.$el.find(".note-container")}));
+                this.model.set("notesView", new NotesView({el:this.$el.find(".note-container")}));
+                if(this.model.get("store").length>0){
+                    this.loadNotes();
+                }
             },
             render:function(){
                 var html = _.template(mainTemplate)({})
@@ -24,7 +27,16 @@ define(["backbone",
 
                 var note = new Note({author:newAuthor,note:newNoteText});
                 this.model.get("store").setItem(note.cid + "_" + new Date().getTime(),JSON.stringify(note.toJSON()));
-                this.model.get("notes").collection.add(note);
+                this.model.get("notesView").collection.add(note);
+            },
+            loadNotes:function(){
+                var store = this.model.get("store")
+                for(var i =0;i<store.length;i++){
+                    var noteJson = JSON.parse(store.getItem(store.key(i)));
+                    var note = new Note({author:noteJson.author,note:noteJson.note});
+                    this.model.get("notesView").collection.add(note);
+                }
+
             }
 
         });
