@@ -10,11 +10,15 @@ define(["backbone",
                 this.model.set("store", window.localStorage);
                 this.model.set("notesView", new NotesView({el:this.$el.find(".notes-container")}));
                 this.listenTo(this.model.get("notesView").collection, 'remove', this.removeNoteFromStore);
+                this.listenTo(this.model.get("notesView").collection, 'change', this.addNoteToStore);
 
 
                 if(this.model.get("store").length>0){
                     this.loadNotes();
                 }
+            },
+            addNoteToStore: function(note){
+                this.model.get("store").setItem(note.cid,JSON.stringify(note.toJSON()));
             },
             removeNoteFromStore: function(note){
                 this.model.get("store").removeItem(note.cid);
@@ -25,21 +29,28 @@ define(["backbone",
                 this.$el.append($(html));
             },
             events:{
-                "click .create-note": "save"
+                "click .create-note": "save",
+                "click .expand-plus": "toggleCreateWindow"
+            },
+            toggleCreateWindow:function(){
+                this.save();
             },
             save: function(e){
-                var newAuthor = this.$el.find(".new-author-input").val();
-                var newNoteText = this.$el.find(".new-note-text").val();
+                var newTitle = "New Note Title";
+                var newNoteText = "New Note Text";
 
-                var note = new Note({author:newAuthor,note:newNoteText});
-                this.model.get("store").setItem(note.cid,JSON.stringify(note.toJSON()));
+                var note = new Note({title:newTitle,note:newNoteText});
+                this.addNoteToStore(note);
                 this.model.get("notesView").collection.add(note);
+
+                this.$el.find(".new-title-input").val("");
+                this.$el.find(".new-note-text").val("");
             },
             loadNotes:function(){
                 var store = this.model.get("store")
                 for(var i =0;i<store.length;i++){
                     var noteJson = JSON.parse(store.getItem(store.key(i)));
-                    var note = new Note({author:noteJson.author,note:noteJson.note});
+                    var note = new Note({title:noteJson.title,note:noteJson.note});
                     this.model.get("notesView").collection.add(note);
                 }
 

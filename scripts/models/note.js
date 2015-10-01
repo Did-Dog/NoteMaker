@@ -4,7 +4,7 @@ define(["backbone",
 
     var Note = Backbone.Model.extend({
         defaults:{
-            author:"J.R.R. Tolkien",
+            title:"Title",
             note:"Note to Self!"
         }
     });
