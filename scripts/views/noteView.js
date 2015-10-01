@@ -24,11 +24,11 @@ define(["backbone",
             "blur note-text": "textChange"
         },
         titleChange:function(e){
-            var newTitle = this.$el.find("[data-id=" + this.model.cid + "] .title-label").text();
+            var newTitle = this.$el.find("[data-id=" + this.model.cid + "] .title-label").html();
             this.model.set("title", newTitle);
         },
         textChange:function(e){
-            var newText = this.$el.find("[data-id=" + this.model.cid + "] .note-text").text();
+            var newText = this.$el.find("[data-id=" + this.model.cid + "] .note-text").html();
             this.model.set("note", newText);
         }
 
