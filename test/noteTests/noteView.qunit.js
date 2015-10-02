@@ -17,14 +17,15 @@ define(['jquery',
                 $("body").append(testContainer);
             }
             function tearDown(){
+                testContainer.empty();
             }
 
 
 
             QUnit.asyncTest("Note View Start Test", function() {
                 setup();
-                QUnit.ok(testContainer.find(".note-container[data-id='" + note.get("id")+"']").text().indexOf("Milk, Eggs, Bread")>=0);
-                QUnit.equal(testContainer.find(".note-container[data-id='" + note.get("id")+"'] .title-label").text(), "Josh");
+                QUnit.ok(testContainer.find(".note-container[data-id='" + note.get("cid")+"']").text().indexOf("Milk, Eggs, Bread")>=0);
+                QUnit.equal(testContainer.find(".note-container[data-id='" + note.get("cid")+"'] .title-label").text(), "Josh");
                 tearDown();
                 QUnit.start();
             });
