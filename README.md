@@ -17,7 +17,7 @@
 
         If for any reason the files cannot be served locally, a version of this will be hosted at:
 
-            vanblake.com/NoteTaker/index.html
+            http://vanblake.com/NoteMaker/index.html
 
     Technologies
 
