@@ -15,18 +15,19 @@ body {
     border-radius: 2px;
     margin: .5em;
     box-shadow: 6px 5px 13px grey;
+    font-size: 1.5em;
 }
 .header {
     padding: 1em 7em;
     background-color: #FBFB69;
     width: auto;
-    height: 2.5em;
+    height: 4em;
     margin: 0em;
 }
 .header .label {
 
     float: left;
-    font-size: 2em;
+    font-size: 3em;
 }
 .note-container hr{
     border: 0;
@@ -37,11 +38,19 @@ body {
     font-weight: 600;
 }
 .delete-note img, .header img {
-    width:2em;
+
     float:right;
     opacity: .2;
     cursor: pointer;
-    padding: 0em .5em;
+    padding: 0em 1em;
+}
+.delete-note img {
+    width:1em;
+    padding: 0em 0em;
+}
+
+.header img {
+    width:3em;
 }
 .delete-note img:hover , .header img:hover{
     opacity: .6;
@@ -55,6 +64,9 @@ body {
     word-wrap: break-word;
     padding: 0.1em .6em;
 }
+.note-text{
+    font-size: .7em;
+}
 .new-title-input, .new-note-text, .create-note{
     margin: 1em;
     float: left;
@@ -67,6 +79,7 @@ body {
     margin:0em auto;
     width: 100%;
     height: auto;
+
 }
 .notes-container {
     width:50%;
