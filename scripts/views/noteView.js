@@ -28,7 +28,7 @@ define(["backbone",
             this.model.set("title", newTitle);
         },
         textChange:function(e){
-            var newText = this.$el.find("[data-id=" + this.model.cid + "] .note-text").html();
+            var newText = this.$el.find("[data-id=" + this.model.cid + "] .note-text").html     ();
             this.model.set("note", newText);
         }
 

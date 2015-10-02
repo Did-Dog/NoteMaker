@@ -28,14 +28,30 @@ define(["backbone",
 
                 this.$el.append($(html));
             },
-            events:{
-                "click .create-note": "save",
-                "click .expand-plus": "toggleCreateWindow"
+            events:function(){
+                return Modernizr.touch ?
+                {
+                    "touchstart .create-note": "save",
+                    "touchstart .expand-plus": "toggleCreateWindow",
+                    "touchstart .delete-all": "clearStore"
+                }:
+                {
+                    "click .create-note": "save",
+                    "click .expand-plus": "toggleCreateWindow",
+                    "click .delete-all": "clearStore"
+                };
+            },
+            clearStore:function(){
+
+                this.model.get("notesView").collection.reset();
+                this.model.get("notesView").render();
+                this.model.get("store").clear();
             },
             toggleCreateWindow:function(){
                 this.save();
             },
             save: function(e){
+
                 var newTitle = "New Note Title";
                 var newNoteText = "New Note Text";
 
@@ -45,6 +61,7 @@ define(["backbone",
 
                 this.$el.find(".new-title-input").val("");
                 this.$el.find(".new-note-text").val("");
+
             },
             loadNotes:function(){
                 var store = this.model.get("store")
