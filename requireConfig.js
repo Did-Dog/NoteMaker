@@ -21,6 +21,7 @@ require.config({
         underscore: 'scripts/lib/underscore.min',
         backbone: 'scripts/lib/backbone.min',
         text: 'scripts/lib/text',
+        interact: "lib/interact.min",
         QUnit: 'http://code.jquery.com/qunit/qunit-1.11.0.js'
     }
 });

@@ -82,7 +82,7 @@ body {
 
 }
 .notes-container {
-    width:50%;
+    width:70%;
     height:100%;
     margin: 3em auto;
 }
@@ -91,4 +91,51 @@ body {
 }
 .fl {
     float:left;
+}
+.fr {
+    float: right;
+}
+.note-group {
+    height: auto;
+    overflow: auto;
+    border: 5px dashed grey;
+    border-radius: 14px;
+    min-width:20em;
+    min-height: 7em;
+}
+.note-group-name {
+    color: grey;
+    background-color: #FBFB69;
+    font-weight: bold;
+    text-align: center;
+    margin: 0em auto;
+    padding: 6px;
+    overflow:auto;
+}
+.edit-group-name {
+    margin: 0 1em;
+    opacity: .3;
+}
+.edit-group-name:hover {
+    opacity: .5;
+    cursor: pointer;
+}
+.note-group-parent {
+    float:left;
+    margin: .5em;
+}
+
+.create-note-group{
+    opacity: .4;
+}
+.create-note-group:hover{
+    opacity: .3;
+    cursor: pointer;
+}
+.new-group-label{
+    margin: 2em auto;
+    height: 100%;
+    width: 15em;
+    text-align: center;
+    font: bold 1.5em arial sans-serif;
 }

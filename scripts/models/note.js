@@ -4,6 +4,7 @@ define(["backbone",
 
     var Note = Backbone.Model.extend({
         defaults:{
+            group:"none",
             title:"Title",
             note:"Note to Self!"
         }

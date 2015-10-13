@@ -6,7 +6,7 @@ define(["backbone",
     var mainModel = Backbone.Model.extend({
         defaults:{
             store : {},
-            notes : new NoteCollection()
+            groups : {"New Notes" : new NoteCollection()}
         }
     });
 

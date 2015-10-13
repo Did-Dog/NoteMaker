@@ -4,7 +4,8 @@ define(["backbone",
 ], function(Backbone, _, Note){
 
     var NoteCollection = Backbone.Collection.extend({
-        model: Note
+        model: Note,
+        name:"New Notes"
     });
 
     return NoteCollection;

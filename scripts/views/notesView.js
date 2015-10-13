@@ -2,13 +2,16 @@ define(["backbone",
     "underscore",
     "../models/note",
     "../views/noteView",
-    "../collections/noteCollection"],
-    function (Backbone, _, Note, NoteView, NoteCollection) {
-        var MainView = Backbone.View.extend({
+    "../collections/noteCollection",
+    "text!../templates/noteGroupTemplate.html"],
+    function (Backbone, _, Note, NoteView, NoteCollection, NoteGroupTemplate) {
+        var NotesView = Backbone.View.extend({
             initialize: function () {
+                var self= this;
                 this.collection = new NoteCollection();
                 this.render();
-                this.listenTo( this.collection, 'add', this.renderNote   );
+                this.listenTo( this.collection, 'add', this.render   );
+
             },
             events:{
                 "click .delete-note":"deleteNote"
@@ -24,22 +27,33 @@ define(["backbone",
                     }
                 })
             },
+            groupNameChange: function(newName){
+                this.collection.name = newName;
+                _.each(this.collection.models, function(note){
+                    note.set("group", newName);
+                });
 
+            },
             render: function() {
                 this.$el.empty();
-
+                var html = _.template(NoteGroupTemplate)({name:this.collection.name, cid:this.collection.cid});
+                this.$el.append($(html));
                 this.collection.each(function( note ){
                     this.renderNote( note );
                 }, this);
+                var self = this;
+                this.$el.find("[data-name='" + this.collection.name + "'] .note-group-name").get(0).addEventListener("input", function(e){
+                    self.groupNameChange($(e.target).html());
+                }, false);
             },
 
             renderNote: function ( note ) {
                 var noteView = new NoteView ({
-                    el:this.$el,
+                    el:this.$el.find(".note-group-container"),
                     model: note
                 });
             }
 
         });
-        return MainView;
+        return NotesView;
     });
