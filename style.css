@@ -37,19 +37,19 @@ body {
 .title-label {
     font-weight: 600;
 }
-.delete-note, .delete-all, .expand-plus {
+.delete-note, .delete-all, .expand-plus, .edit-note-title {
 
     float:right;
     opacity: .2;
     cursor: pointer;
     padding: 0em 1em;
 }
-.delete-note {
+.delete-note, .edit-note-title {
     width:1em;
     padding: 0em 0em;
 }
 
-.delete-note:hover ,  .delete-all:hover, .expand-plus:hover{
+.delete-note:hover ,  .delete-all:hover, .expand-plus:hover, .edit-note-title:hover{
     opacity: .6;
 }
 .input-area {
@@ -57,7 +57,7 @@ body {
 
 }
 .title-label, .note-text {
-    width: 70%;
+    width: 65%;
     word-wrap: break-word;
     padding: 0.1em .6em;
 }

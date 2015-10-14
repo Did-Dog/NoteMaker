@@ -18,10 +18,34 @@ define(["backbone",
             this.$el.find("[data-id=" + this.model.cid + "] .note-text").get(0).addEventListener("input", function(e){
                     self.textChange();
             }, false);
+
+            this.$el.find(".note-container[data-id="+this.model.cid+"]").hover(
+                function(e){
+                },
+                function(e){
+                    $(e.target).find(".edit-note-title").hide();
+                    $(e.target).find(".delete-note").hide();
+
+                });
+
+            this.$el.find(".note-container[data-id="+this.model.cid+"]").mouseenter(function(e){
+                self.$el.find(".edit-note-title").show();
+                self.$el.find(".delete-note").show();
+            });
+            this.$el.find(".note-container[data-id="+this.model.cid+"]").mouseleave(function(e){
+                self.$el.find(".edit-note-title").hide();
+                self.$el.find(".delete-note").hide();
+            });
+
         },
         events:{
             "blur title-label": "titleChange",
-            "blur note-text": "textChange"
+            "blur note-text": "textChange",
+            "click .edit-note-title": "toggleTitleEditable"
+        },
+        toggleTitleEditable:function(e){
+            var inverse = !(this.$el.find(".note-container[data-id="+this.model.cid+"] .title-label").attr("contenteditable") == "true");
+            this.$el.find(".note-container[data-id="+this.model.cid+"] .title-label").attr("contenteditable", inverse);
         },
         titleChange:function(e){
             var newTitle = this.$el.find("[data-id=" + this.model.cid + "] .title-label").html();
