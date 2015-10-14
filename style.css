@@ -31,28 +31,25 @@ body {
 }
 .note-container hr{
     border: 0;
-    height: 1px;
+    height: 2px;
     background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgb(220, 220, 96), rgba(0, 0, 0, 0));
 }
 .title-label {
     font-weight: 600;
 }
-.delete-note img, .header img {
+.delete-note, .delete-all, .expand-plus {
 
     float:right;
     opacity: .2;
     cursor: pointer;
     padding: 0em 1em;
 }
-.delete-note img {
+.delete-note {
     width:1em;
     padding: 0em 0em;
 }
 
-.header img {
-    width:3em;
-}
-.delete-note img:hover , .header img:hover{
+.delete-note:hover ,  .delete-all:hover, .expand-plus:hover{
     opacity: .6;
 }
 .input-area {
@@ -60,7 +57,7 @@ body {
 
 }
 .title-label, .note-text {
-    width: 85%;
+    width: 70%;
     word-wrap: break-word;
     padding: 0.1em .6em;
 }
