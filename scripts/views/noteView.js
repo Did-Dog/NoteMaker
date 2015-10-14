@@ -6,6 +6,10 @@ define(["backbone",
         initialize:function(){
             this.render();
         },
+        handleDragStart :function(e) {
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/json', JSON.stringify(this.model));
+        },
         render:function(){
             var html = _.template(noteTemplate)(_.extend(this.model.attributes,{cid:this.model.cid}));
             var self = this;
@@ -18,6 +22,8 @@ define(["backbone",
             this.$el.find("[data-id=" + this.model.cid + "] .note-text").get(0).addEventListener("input", function(e){
                     self.textChange();
             }, false);
+            this.$el.find(".note-container[data-id=" + this.model.cid + "]").get(0).addEventListener("dragstart", self.handleDragStart.bind(this), false);
+
 
             this.$el.find(".note-container[data-id="+this.model.cid+"]").hover(
                 function(e){
@@ -29,12 +35,12 @@ define(["backbone",
                 });
 
             this.$el.find(".note-container[data-id="+this.model.cid+"]").mouseenter(function(e){
-                self.$el.find(".edit-note-title").show();
-                self.$el.find(".delete-note").show();
+                self.$el.find(".note-container[data-id="+self.model.cid+"] .edit-note-title").show();
+                self.$el.find(".note-container[data-id="+self.model.cid+"] .delete-note").show();
             });
             this.$el.find(".note-container[data-id="+this.model.cid+"]").mouseleave(function(e){
-                self.$el.find(".edit-note-title").hide();
-                self.$el.find(".delete-note").hide();
+                self.$el.find(".note-container[data-id="+self.model.cid+"] .edit-note-title").hide();
+                self.$el.find(".note-container[data-id="+self.model.cid+"] .delete-note").hide();
             });
 
         },

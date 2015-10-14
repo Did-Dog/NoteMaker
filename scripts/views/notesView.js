@@ -11,10 +11,11 @@ define(["backbone",
                 this.collection = new NoteCollection();
                 this.render();
                 this.listenTo( this.collection, 'add', this.render   );
+                this.listenTo( this.collection, 'remove', this.render   );
 
             },
             events:{
-                "click .delete-note":"deleteNote",
+                "click .delete-note": "deleteNote",
                 "click .delete-group": "deleteView"
             },
             deleteNote:function(e){
@@ -44,6 +45,27 @@ define(["backbone",
                     this.$el.toggle("slide");
                 }
             },
+            handleDrop:function(e){
+                var draggedModelObject = JSON.parse(e.dataTransfer.getData("text/json"));
+
+                this.trigger("noteMoved", draggedModelObject)
+                var draggedNote = new Note({title:draggedModelObject.title,note:draggedModelObject.note, group:this.collection.name});
+
+                draggedNote.cid = draggedModelObject.cid;
+                this.collection.add(draggedNote);
+
+
+            },
+            handleDragOver :function(e) {
+                if (e.preventDefault) {
+                    e.preventDefault(); // Necessary. Allows us to drop.
+                }
+
+                e.dataTransfer.dropEffect = 'move';  // See the section on the DataTransfer object.
+
+                return false;
+            },
+
             render: function() {
                 this.$el.empty();
                 var html = _.template(NoteGroupTemplate)({name:this.collection.name, cid:this.collection.cid});
@@ -55,6 +77,10 @@ define(["backbone",
                 this.$el.find("[data-name='" + this.collection.name + "'] .note-group-name").get(0).addEventListener("input", function(e){
                     self.groupNameChange($(e.target).html());
                 }, false);
+
+
+                this.$el.find(".note-group[data-name='" + this.collection.name + "']").get(0).addEventListener("drop", self.handleDrop.bind(this), false);
+                this.$el.find(".note-group[data-name='" + this.collection.name + "']").get(0).addEventListener("dragover", self.handleDragOver, false);
             },
 
             renderNote: function ( note ) {

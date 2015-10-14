@@ -8,20 +8,23 @@ define(["backbone",
             initialize:function(){
                 this.render();
                 this.model.set("store", window.localStorage);
-//                this.model.set("notesView", new NotesView({el:this.$el.find(".notes-container")}));
-//                this.listenTo(this.model.get("notesView").collection, 'remove', this.removeNoteFromStore);
-//                this.listenTo(this.model.get("notesView").collection, 'change', this.addNoteToStore);
                 var notesViewElement = $("<div class='note-group-parent'></div>");
                 this.$el.find(".notes-container").prepend(notesViewElement);
                 var defaultNotesGroup = new NotesView({el:notesViewElement});
+                defaultNotesGroup.bind("noteMoved", this.noteMoved, this);
                 this.model.get("groups")[defaultNotesGroup.collection.name] = defaultNotesGroup;
                 this.listenTo(this.model.get("groups")[defaultNotesGroup.collection.name].collection, 'remove', this.removeNoteFromStore);
                 this.listenTo(this.model.get("groups")[defaultNotesGroup.collection.name].collection, 'change', this.addNoteToStore);
+                this.listenTo(this.model.get("groups")[defaultNotesGroup.collection.name].collection, 'add', this.addNoteToStore);
 
 
                 if(this.model.get("store").length>0){
                     this.loadNotes();
                 }
+            },
+
+            noteMoved: function(movedNoteObject){
+                this.model.get("groups")[movedNoteObject.group].collection.remove(movedNoteObject.cid);
             },
             addNoteToStore: function(note){
                 this.model.get("store").setItem(note.cid,JSON.stringify(note.toJSON()));
@@ -50,17 +53,22 @@ define(["backbone",
                 };
             },
             createNewGroup:function(){
+
                 var notesViewElement = $("<div class='note-group-parent'></div>"),
                 newNotesGroup = new NotesView({el:notesViewElement});
                 this.$el.find(".notes-container").prepend(notesViewElement);
                 newNotesGroup.collection.name = "New Notes ("+_.values(this.model.get("groups")).length+")";
                 newNotesGroup.render();
                 this.model.get("groups")[newNotesGroup.collection.name] = newNotesGroup;
+
+
+                newNotesGroup.bind("noteMoved", this.noteMoved, this);
+                this.listenTo(newNotesGroup.collection, 'remove', this.removeNoteFromStore);
+                this.listenTo(newNotesGroup.collection, 'change', this.addNoteToStore);
+                this.listenTo(newNotesGroup.collection, 'add', this.addNoteToStore);
             },
             clearStore:function(){
 
-//                this.model.get("notesView").collection.reset();
-//                this.model.get("notesView").render();
                 _.each(_.values(this.model.get("groups")), function(groupView){
                     groupView.collection.reset();
                 });
@@ -70,8 +78,11 @@ define(["backbone",
                 var object = {};
                 object[defaultNotesGroup.name] = defaultNotesGroup
 
+
+                defaultNotesGroup.bind("noteMoved", this.noteMoved, this);
                 this.listenTo(defaultNotesGroup.collection, 'remove', this.removeNoteFromStore);
                 this.listenTo(defaultNotesGroup.collection, 'change', this.addNoteToStore);
+                this.listenTo(defaultNotesGroup.collection, 'add', this.addNoteToStore);
                 this.model.set("groups",object);
 
 
@@ -85,9 +96,6 @@ define(["backbone",
                 var newTitle = "New Note Title";
                 var newNoteText = "New Note Text";
 
-//                var note = new Note({title:newTitle,note:newNoteText, group:this.model.get("notesView").collection.name});
-//                this.addNoteToStore(note);
-//                this.model.get("notesView").collection.add(note);
                 var note = new Note({title:newTitle,note:newNoteText, group:"New Notes"});
                 this.addNoteToStore(note);
                 this.model.get("groups")[note.get("group")].collection.add(note);
@@ -102,14 +110,7 @@ define(["backbone",
                     var noteJson = JSON.parse(store.getItem(store.key(i)));
                     var note = new Note({title:noteJson.title,note:noteJson.note, group:noteJson.group});
                     note.cid = store.key(i);
-//                    this.model.get("notesView").collection.name = note.get("group");
-//                    this.model.get("notesView").collection.add(note);
 
-//                    for(var k =0;k < this.model.get("groups").length ; k++){
-//                        if(this.model.get("groups")[k].collection.name == note.get("group")){
-//                            this.model.get("groups")[k].collection.add(note);
-//                        }
-//                    }
                     if(this.model.get("groups")[note.get("group")]){
                         this.model.get("groups")[note.get("group")].collection.add(note);
                     }
@@ -121,8 +122,11 @@ define(["backbone",
                         newNotesGroup.collection.add(note);
                         this.model.get("groups")[note.get("group")] = newNotesGroup;
 
+
+                        newNotesGroup.bind("noteMoved", this.noteMoved, this);
                         this.listenTo(newNotesGroup.collection, 'remove', this.removeNoteFromStore);
                         this.listenTo(newNotesGroup.collection, 'change', this.addNoteToStore);
+                        this.listenTo(newNotesGroup.collection, 'add', this.addNoteToStore);
                     }
 
                 }
