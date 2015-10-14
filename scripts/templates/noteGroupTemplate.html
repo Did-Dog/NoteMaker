@@ -1,10 +1,13 @@
 <div class="note-group" data-name="<%= name%>" >
     <div class="note-group-name">
         <div contenteditable="true" class="fl" ><%= name%></div>
-        <div class="edit-group-name fr fa fa-pencil"></div>
+        <% if (name !== "New Notes") { %>
+        <div class="delete-group fr fa fa-close"></div>
+        <% } %>
     </div>
-
+    <div class="note-group-error-container" style="display:none;"></div>
     <div class="note-group-container">
 
     </div>
+
 </div>

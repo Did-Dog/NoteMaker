@@ -14,8 +14,7 @@ define(["backbone",
 
             },
             events:{
-                "blur title-label": "titleChange",
-                "blur note-text": "textChange"
+                "click delete-group": "deleteView"
             }
         });
         return NoteGroupsView;

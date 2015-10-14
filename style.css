@@ -112,11 +112,11 @@ body {
     padding: 6px;
     overflow:auto;
 }
-.edit-group-name {
+.delete-group {
     margin: 0 1em;
     opacity: .3;
 }
-.edit-group-name:hover {
+.delete-group:hover {
     opacity: .5;
     cursor: pointer;
 }
@@ -138,4 +138,11 @@ body {
     width: 15em;
     text-align: center;
     font: bold 1.5em arial sans-serif;
+}
+.note-group-error-container {
+    color: red;
+    font: 1.4em arial, sans-serif;
+    width: 50%;
+    text-align: center;
+    margin: 0em auto;
 }

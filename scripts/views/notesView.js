@@ -14,7 +14,8 @@ define(["backbone",
 
             },
             events:{
-                "click .delete-note":"deleteNote"
+                "click .delete-note":"deleteNote",
+                "click .delete-group": "deleteView"
             },
             deleteNote:function(e){
                 var self = this;
@@ -33,6 +34,15 @@ define(["backbone",
                     note.set("group", newName);
                 });
 
+            },
+            deleteView : function(e){
+                if(this.collection.length !=0){
+                    this.$el.find(".note-group-error-container").text("Empty your group!");
+                    this.$el.find(".note-group-error-container").toggle("slide");
+                }
+                else{
+                    this.$el.toggle("slide");
+                }
             },
             render: function() {
                 this.$el.empty();
